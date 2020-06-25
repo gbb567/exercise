@@ -1,14 +1,13 @@
 package com.gbb.content.recursive;
 
 import com.gbb.content.exceptions.ExceptionConstantEnum;
-import com.gbb.content.utils.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
 
 /**
+ * 递归工具
  * @author gaobinbin
  * @date 2020/06/25
  */

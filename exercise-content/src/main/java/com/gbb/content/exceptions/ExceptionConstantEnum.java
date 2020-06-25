@@ -1,22 +1,15 @@
 package com.gbb.content.exceptions;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
+ * 自定义异常枚举
  * @author gaobinbin
  * @date 2020/06/25
  */
 public class ExceptionConstantEnum {
     private static class IntegerCounter{
         private int i;
-        public IntegerCounter(int i) {
-            this.i = i;
-        }
-
-        public int get() {
-            return ++i;
-        }
+        public IntegerCounter(int i) {this.i = i;}
+        public int get() {return ++i;}
     }
     private final static IntegerCounter RECURSIVE_CODE_COUNTER = new IntegerCounter(3000);
     public static CustomRuntimeException RECURSIVE_FRAME_NULL(){

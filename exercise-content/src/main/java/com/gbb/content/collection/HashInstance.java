@@ -5,26 +5,19 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * 自定义hash类，用于key为对象，以及其他类似lombok的equal和hash无效
  * @author gaobinbin
  * @date 2020/06/25
  */
 public class HashInstance<K,V> {
     private int count;
     private Map<HashKey<K>,V> map = new HashMap<>();
-
-    public int size(){
-        return map.size();
-    }
-
-    public V get(HashKey<K> k){
-        return map.get(k);
-    }
-
+    public int size(){return map.size();}
+    public V get(HashKey<K> k){return map.get(k);}
     public Pair<HashKey<K>,V> put(K k, V v){
         HashKey<K> key= new HashKey<>(++count,k);
         return new Pair<>(key,map.put(key,v));
     }
-
     public static class HashKey<K>{
         private int currentIndex;
         private K k;
@@ -32,11 +25,7 @@ public class HashInstance<K,V> {
             this.currentIndex = i;
             this.k = k;
         }
-
-        public K getKey(){
-            return this.k;
-        }
-
+        public K getKey(){return this.k;}
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -44,10 +33,7 @@ public class HashInstance<K,V> {
             HashKey<?> hashKey = (HashKey<?>) o;
             return currentIndex == hashKey.currentIndex;
         }
-
         @Override
-        public int hashCode() {
-            return Objects.hash(currentIndex);
-        }
+        public int hashCode() {return Objects.hash(currentIndex);}
     }
 }
