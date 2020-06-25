@@ -10,4 +10,8 @@ public class CollectionUtils {
     public static boolean isEmpty(List list){
         return null == list || list.isEmpty();
     }
+
+    public static boolean isNotEmpty(List list){
+        return null != list && !list.isEmpty();
+    }
 }
