@@ -27,8 +27,17 @@ public abstract class Sorter<O> {
     void swap(int i,int j){
         source.set(i,source.set(j,source.get(i)));
     }
+    O get(int i){
+        return source.get(i);
+    }
+    O set(int i,O o){
+        return source.set(i,o);
+    }
     void setList(List<O> source){
         this.source = source;
+    }
+    List<O> getSource(){
+        return source;
     }
     abstract void doRun(List<O> source);
 }

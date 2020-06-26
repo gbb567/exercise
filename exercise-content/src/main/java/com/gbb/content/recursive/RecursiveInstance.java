@@ -1,6 +1,7 @@
 package com.gbb.content.recursive;
 
 import com.gbb.content.exceptions.ExceptionConstantEnum;
+import com.gbb.content.utils.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,18 +13,17 @@ import java.util.Map;
  * @date 2020/06/25
  */
 public class RecursiveInstance<Parameter,R> {
-    private boolean useResultCache;
-    private boolean useFrameCache;
+    private boolean useCache;
     private Map<Parameter,R> resultCache = new HashMap<>();
-    private Map<Parameter,RecursiveFrame<Parameter,R>> frameMap = new HashMap<>();
+    private LinkedList<RecursiveFrame<Parameter,R>> frameCache = new LinkedList<>();
     private RecursiveFrame<Parameter,R> frame;
-    public RecursiveInstance(RecursiveFrame<Parameter,R> frame){this(frame,false,true);}
-    public RecursiveInstance(RecursiveFrame<Parameter,R> frame,boolean useFrameCache){this(frame,false,useFrameCache);}
-    public RecursiveInstance(RecursiveFrame<Parameter,R> frame,boolean useResultCache,boolean useFrameCache){
+    public RecursiveInstance(RecursiveFrame<Parameter,R> frame){
+        this(frame,true);
+    }
+    public RecursiveInstance(RecursiveFrame<Parameter,R> frame,boolean useCache){
         this.frame = frame;
-        this.useResultCache = useResultCache;
-        this.useFrameCache = useFrameCache;
         this.frame.setRecursiveInstance(this);
+        this.useCache = useCache;
     }
     public R getResult(){return frame.getResult();}
     public void run(){
@@ -35,7 +35,7 @@ public class RecursiveInstance<Parameter,R> {
         RecursiveFrame<Parameter,R> currentFrame;
         while(!frameStack.isEmpty()){
             currentFrame = frameStack.peek();
-            if(useResultCache && resultCache.containsKey(currentFrame.getParameter())){
+            if(useCache && resultCache.containsKey(currentFrame.getParameter())){
                 currentFrame.setResult(resultCache.get(currentFrame.getParameter()));
                 putFrameCache(frameStack.pop());
             }else if(currentFrame.run()){
@@ -47,16 +47,16 @@ public class RecursiveInstance<Parameter,R> {
         }
     }
     private void putResultCache(RecursiveFrame<Parameter, R> currentFrame){
-        if(useResultCache){
+        if(useCache){
             resultCache.put(currentFrame.getParameter(),currentFrame.getResult());
         }
     }
     private void putFrameCache(RecursiveFrame<Parameter, R> frame){
-        if(useFrameCache){
-            frameMap.put(frame.getParameter(),frame);
+        if(CollectionUtils.isNotEmpty(frame.getChildFrame())){
+            frame.getChildFrame().forEach(f->frameCache.push(f));
         }
     }
-    RecursiveFrame<Parameter,R> getFrame(Parameter parameter) {
-        return useFrameCache?frameMap.get(parameter):null;
+    RecursiveFrame<Parameter,R> getFrame() {
+        return frameCache.isEmpty()?null:frameCache.poll();
     }
 }

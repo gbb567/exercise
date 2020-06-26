@@ -28,7 +28,7 @@ public class FibonacciTest {
                 System.out.println("cost: " + (System.currentTimeMillis()-start));
             }
         };
-        consumer.accept(32);
+        consumer.accept(50);
     }
 
 
@@ -66,7 +66,7 @@ public class FibonacciTest {
     }
     public static void testRecursive(){
         long start = System.currentTimeMillis();
-        RecursiveInstance instance = new RecursiveInstance(new FibRecursiveFrame(40));
+        RecursiveInstance instance = new RecursiveInstance(new FibRecursiveFrame(50));
         instance.run();
         System.out.println(instance.getResult());
         System.out.println("cost :" + (System.currentTimeMillis()-start));

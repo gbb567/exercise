@@ -19,25 +19,25 @@ public abstract class RecursiveFrame<Parameter,R>{
     public void setResult(R result){this.result = result;}
     public R getResult(){return this.result;};
     protected List<RecursiveFrame<Parameter,R>> getChildFrame(){return childFrame;}
-    private void clear(){
+    protected void clear(){
         this.childFrame = null;
-        parameter = null;
         result = null;
         flag = true;
         doClear();
     }
     void setRecursiveInstance(RecursiveInstance<Parameter, R> recursiveInstance) {this.recursiveInstance = recursiveInstance;}
     protected void addChildFrame(Parameter parameter){
-        RecursiveFrame<Parameter,R> frame = recursiveInstance.getFrame(parameter);
-        if(null != frame){
-            this.childFrame.add(frame);
-        } else {
+        RecursiveFrame<Parameter,R> frame = recursiveInstance.getFrame();
+        if (null == frame) {
             frame = newFrame(parameter);
             frame.setRecursiveInstance(this.recursiveInstance);
-            this.childFrame.add(frame);
+        } else {
+            frame.clear();
+            frame.parameter = parameter;
         }
+        this.childFrame.add(frame);
     }
-    public boolean run(){
+    boolean run(){
         if(flag){
             if(runDirect()){
                 return true;
@@ -50,7 +50,9 @@ public abstract class RecursiveFrame<Parameter,R>{
         runStack();
         return true;
     }
-    public void doClear(){}
+    public void doClear(){
+        parameter = null;
+    }
     public abstract boolean runDirect();
     public abstract void runStack();
     public abstract void split();

@@ -12,13 +12,15 @@ import java.util.List;
  */
 public class SorterTest {
     public static void test(){
-        Sorter<Integer> sorter = SortFactory.getIntSorter(ShellSort.class);
-        for(int i=0;i<1000;i++){
-            List<Integer> list = IntListRandom.random();
+        long start = System.currentTimeMillis();
+        Sorter<Integer> sorter = SortFactory.getIntSorter(MergeSort.class);
+        for(int i=0;i<3000;i++){
+            List<Integer> list = IntListRandom.random(400);
             System.out.println(JSON.toJSONString(list));
             sorter.run(list);
             System.out.println(JSON.toJSONString(list));
             SorterChecker.check(list,Integer::compareTo);
         }
+        System.out.println(System.currentTimeMillis()-start);
     }
 }
