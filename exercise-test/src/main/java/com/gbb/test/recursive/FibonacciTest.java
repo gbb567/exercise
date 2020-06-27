@@ -46,7 +46,7 @@ public class FibonacciTest {
             return true;
         }
         @Override
-        public void runStack() {
+        public void runAfterSplit() {
             int total = 0;
             for(RecursiveFrame<Integer,Integer> frame:getChildFrame()){
                 total += frame.getResult();
@@ -66,7 +66,7 @@ public class FibonacciTest {
     }
     public static void testRecursive(){
         long start = System.currentTimeMillis();
-        RecursiveInstance instance = new RecursiveInstance(new FibRecursiveFrame(50));
+        RecursiveInstance instance = new RecursiveInstance(new FibRecursiveFrame(50),true);
         instance.run();
         System.out.println(instance.getResult());
         System.out.println("cost :" + (System.currentTimeMillis()-start));

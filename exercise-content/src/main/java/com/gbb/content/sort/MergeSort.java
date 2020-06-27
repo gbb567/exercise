@@ -1,7 +1,6 @@
 package com.gbb.content.sort;
 
 import com.gbb.content.recursive.RecursiveFrame;
-import com.gbb.content.recursive.RecursiveInstance;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,8 +13,7 @@ import java.util.List;
  */
 public class MergeSort<O> extends Sorter<O> {
     public MergeSort(Comparator<O> comparator) {super(comparator);}
-
-    static class MergeSortParameter<O>{
+    class MergeSortParameter<O>{
         private List<O> source;
         private int start;
         private int mid;
@@ -32,7 +30,6 @@ public class MergeSort<O> extends Sorter<O> {
             this.mid = start+((end - start) >> 1);
         }
     }
-
     class MergeSortRecursiveFrame extends RecursiveFrame<MergeSortParameter<O>,List<O>>{
 
         public MergeSortRecursiveFrame(MergeSortParameter<O> oMergeSortParameter) {
@@ -52,7 +49,7 @@ public class MergeSort<O> extends Sorter<O> {
         }
 
         @Override
-        public void runStack() {
+        public void runAfterSplit() {
             MergeSortParameter<O> parameter = getParameter();
             sort(parameter.start,parameter.mid,parameter.end);
         }
@@ -69,7 +66,6 @@ public class MergeSort<O> extends Sorter<O> {
             return new MergeSortRecursiveFrame(p);
         }
     }
-
     private void merge(int start,int end){
         int d = end - start;
         if(d == 1){
@@ -83,7 +79,6 @@ public class MergeSort<O> extends Sorter<O> {
             sort(start,mid,end);
         }
     }
-
     private void sort(int start,int mid,int end){
         int left = start;
         int right = mid;

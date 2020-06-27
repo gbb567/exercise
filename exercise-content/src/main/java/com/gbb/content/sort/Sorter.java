@@ -24,6 +24,12 @@ public abstract class Sorter<O> {
     boolean compare(int i,int j){
         return comparator.compare(source.get(i),source.get(j)) > 0;
     }
+    boolean compare(O o,int i){
+        return comparator.compare(o,source.get(i)) > 0;
+    }
+    boolean compare(int i,O o){
+        return comparator.compare(source.get(i),o) > 0;
+    }
     void swap(int i,int j){
         source.set(i,source.set(j,source.get(i)));
     }

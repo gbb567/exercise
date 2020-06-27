@@ -18,7 +18,7 @@ public class RecursiveInstance<Parameter,R> {
     private LinkedList<RecursiveFrame<Parameter,R>> frameCache = new LinkedList<>();
     private RecursiveFrame<Parameter,R> frame;
     public RecursiveInstance(RecursiveFrame<Parameter,R> frame){
-        this(frame,true);
+        this(frame,false);
     }
     public RecursiveInstance(RecursiveFrame<Parameter,R> frame,boolean useCache){
         this.frame = frame;

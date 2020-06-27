@@ -42,19 +42,19 @@ public abstract class RecursiveFrame<Parameter,R>{
             if(runDirect()){
                 return true;
             }
+            runBeforeSplit();
             childFrame = new LinkedList<>();
             split();
             flag = false;
             return false;
         }
-        runStack();
+        runAfterSplit();
         return true;
     }
-    public void doClear(){
-        parameter = null;
-    }
+    public void runBeforeSplit(){};
+    public void runAfterSplit(){};
+    public void doClear(){parameter = null;}
     public abstract boolean runDirect();
-    public abstract void runStack();
     public abstract void split();
     public abstract RecursiveFrame<Parameter,R> newFrame(Parameter p);
 }
